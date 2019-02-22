@@ -18,6 +18,7 @@ package de.acegen.extensions.java;
 import de.acegen.aceGen.Attribute;
 import de.acegen.aceGen.HttpServer;
 import de.acegen.aceGen.Model;
+import de.acegen.extensions.CommonExtension;
 import de.acegen.extensions.java.AttributeExtension;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,10 @@ public class ModelExtension {
   @Inject
   @Extension
   private AttributeExtension _attributeExtension;
+  
+  @Inject
+  @Extension
+  private CommonExtension _commonExtension;
   
   public String modelName(final Model it) {
     StringConcatenation _builder = new StringConcatenation();
@@ -293,7 +298,7 @@ public class ModelExtension {
   public void allAttributesRec(final Model it, final List<Attribute> attrs) {
     EList<Attribute> _attributes = it.getAttributes();
     for (final Attribute attribute : _attributes) {
-      boolean _containsAttribute = this.containsAttribute(attrs, attribute);
+      boolean _containsAttribute = this._commonExtension.containsAttribute(attrs, attribute);
       boolean _not = (!_containsAttribute);
       if (_not) {
         attrs.add(attribute);
@@ -457,22 +462,6 @@ public class ModelExtension {
       }
     }
     return _builder.toString();
-  }
-  
-  public boolean containsAttribute(final List<Attribute> it, final Attribute attribute) {
-    int _size = it.size();
-    boolean _equals = (_size == 0);
-    if (_equals) {
-      return false;
-    } else {
-      for (final Attribute attr : it) {
-        boolean _equals_1 = attr.getName().equals(attribute.getName());
-        if (_equals_1) {
-          return true;
-        }
-      }
-    }
-    return false;
   }
   
   public boolean containsModel(final List<Model> it, final Model model) {

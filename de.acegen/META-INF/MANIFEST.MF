@@ -16,15 +16,16 @@ Require-Bundle: org.eclipse.xtext,
  org.eclipse.emf.common,
  org.eclipse.xtend.lib;bundle-version="2.14.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: de.acegen.serializer,
- de.acegen.validation,
- de.acegen,
- de.acegen.services,
- de.acegen.aceGen.util,
- de.acegen.parser.antlr,
- de.acegen.scoping,
+Export-Package: de.acegen,
  de.acegen.aceGen,
  de.acegen.aceGen.impl,
+ de.acegen.aceGen.util,
+ de.acegen.extensions,
+ de.acegen.generator,
+ de.acegen.parser.antlr,
  de.acegen.parser.antlr.internal,
- de.acegen.generator
+ de.acegen.scoping,
+ de.acegen.serializer,
+ de.acegen.services,
+ de.acegen.validation
 Import-Package: org.apache.log4j

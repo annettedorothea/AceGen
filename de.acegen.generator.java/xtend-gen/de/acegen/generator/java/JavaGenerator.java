@@ -13,7 +13,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
-package de.acegen.generator;
+package de.acegen.generator.java;
 
 import de.acegen.aceGen.AuthUser;
 import de.acegen.aceGen.HttpServer;
@@ -22,6 +22,7 @@ import de.acegen.aceGen.HttpServerAceWrite;
 import de.acegen.aceGen.HttpServerOutcome;
 import de.acegen.aceGen.HttpServerView;
 import de.acegen.aceGen.Model;
+import de.acegen.aceGen.Project;
 import de.acegen.extensions.java.AceExtension;
 import de.acegen.extensions.java.JavaExtension;
 import de.acegen.extensions.java.ModelExtension;
@@ -34,12 +35,16 @@ import de.acegen.templates.java.EventTemplate;
 import de.acegen.templates.java.ModelTemplate;
 import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.xtext.generator.AbstractGenerator;
 import org.eclipse.xtext.generator.IFileSystemAccess2;
+import org.eclipse.xtext.generator.IGeneratorContext;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
-public class JavaGenerator {
+public class JavaGenerator extends AbstractGenerator {
   @Inject
   private ActionTemplate actionTemplate;
   
@@ -208,8 +213,7 @@ public class JavaGenerator {
           String _plus_16 = (_plus_15 + _responseDataName);
           String _plus_17 = (_plus_16 + ".java");
           fsa.generateFile(_plus_17, 
-            ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
-            this.modelTemplate.generateResponseData(ace, java));
+            ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.modelTemplate.generateResponseData(ace, java));
           String _packageFolder_6 = this._javaExtension.packageFolder(java);
           String _plus_18 = (_packageFolder_6 + "/data/");
           String _responseDataInterfaceName = this._aceExtension.responseDataInterfaceName(ace);
@@ -240,16 +244,16 @@ public class JavaGenerator {
           ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.eventTemplate.generateViewInterface(view, java));
       }
     }
-    fsa.generateFile("com/anfelisa/ace/AbstractBaseTest.java", 
-      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateBaseTest());
+    fsa.generateFile("com/anfelisa/ace/AbstractBaseTest.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
+      this.aceTemplate.generateBaseTest());
     String _packageFolder = this._javaExtension.packageFolder(java);
     String _plus = (_packageFolder + "/TestUtils.java");
-    fsa.generateFile(_plus, 
-      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateTestUtils(java));
+    fsa.generateFile(_plus, ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
+      this.aceTemplate.generateTestUtils(java));
     String _packageFolder_1 = this._javaExtension.packageFolder(java);
     String _plus_1 = (_packageFolder_1 + "/ActionCalls.java");
-    fsa.generateFile(_plus_1, 
-      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateActionCalls(java));
+    fsa.generateFile(_plus_1, ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
+      this.aceTemplate.generateActionCalls(java));
     String _packageFolder_2 = this._javaExtension.packageFolder(java);
     String _plus_2 = (_packageFolder_2 + "/events/EventFactory.java");
     fsa.generateFile(_plus_2, 
@@ -258,16 +262,16 @@ public class JavaGenerator {
     String _plus_3 = (_packageFolder_3 + "/actions/AceDataFactory.java");
     fsa.generateFile(_plus_3, 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.actionTemplate.generateAceDataFactory(java));
-    fsa.generateFile("com/anfelisa/ace/EventFactory.java", 
-      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, this.eventTemplate.generateEventFactory());
+    fsa.generateFile("com/anfelisa/ace/EventFactory.java", ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, 
+      this.eventTemplate.generateEventFactory());
     String _packageFolder_4 = this._javaExtension.packageFolder(java);
     String _plus_4 = (_packageFolder_4 + "/AppRegistration.java");
     fsa.generateFile(_plus_4, 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.actionTemplate.generateAppRegistration(java));
     fsa.generateFile(("com/anfelisa/ace" + "/App.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, 
       this.aceTemplate.generateApp());
-    fsa.generateFile(("com/anfelisa/ace" + "/AppRegistration.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, 
-      this.aceTemplate.generateAppRegistration());
+    fsa.generateFile(("com/anfelisa/ace" + "/AppRegistration.java"), 
+      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, this.aceTemplate.generateAppRegistration());
     fsa.generateFile(("com/anfelisa/ace" + "/AppConfiguration.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateAppConfiguration());
     fsa.generateFile(("com/anfelisa/ace" + "/CustomAppConfiguration.java"), 
@@ -284,8 +288,8 @@ public class JavaGenerator {
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateSetSystemTimeResource());
     fsa.generateFile(("com/anfelisa/ace" + "/StopE2ESessionResource.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateStopE2ESessionResource());
-    fsa.generateFile(("com/anfelisa/ace" + "/AceOperation.java"), 
-      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateAceOperation());
+    fsa.generateFile(("com/anfelisa/ace" + "/AceOperation.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
+      this.aceTemplate.generateAceOperation());
     fsa.generateFile(("com/anfelisa/ace" + "/PrepareE2EResource.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generatePrepareE2EResource());
     fsa.generateFile(("com/anfelisa/ace" + "/GetServerTimelineResource.java"), 
@@ -338,16 +342,29 @@ public class JavaGenerator {
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, this.aceTemplate.generateViewProvider());
     fsa.generateFile(("com/anfelisa/ace" + "/AbstractViewProvider.java"), 
       ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateAbstractViewProvider());
-    fsa.generateFile(("com/anfelisa/ace" + "/EventConsumer.java"), 
-      ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateEventconsumer());
+    fsa.generateFile(("com/anfelisa/ace" + "/EventConsumer.java"), ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
+      this.aceTemplate.generateEventconsumer());
     fsa.generateFile("ace_creation.xml", ACEOutputConfigurationProvider.DEFAULT_RESOURCE_OUTPUT, 
       this.aceTemplate.generateAceMigration());
     if ((authUser != null)) {
       String _firstUpper = StringExtensions.toFirstUpper(authUser.getName());
       String _plus_5 = ("com/anfelisa/auth/" + _firstUpper);
       String _plus_6 = (_plus_5 + ".java");
-      fsa.generateFile(_plus_6, ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, 
-        this.aceTemplate.generateAuthUser(authUser));
+      fsa.generateFile(_plus_6, 
+        ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, this.aceTemplate.generateAuthUser(authUser));
+    }
+  }
+  
+  @Override
+  public void doGenerate(final Resource resource, final IFileSystemAccess2 fsa, final IGeneratorContext context) {
+    if ((((resource != null) && (resource.getContents() != null)) && (resource.getContents().size() > 0))) {
+      EObject _get = resource.getContents().get(0);
+      final Project project = ((Project) _get);
+      HttpServer _httpServer = project.getHttpServer();
+      boolean _tripleNotEquals = (_httpServer != null);
+      if (_tripleNotEquals) {
+        this.doGenerate(project.getHttpServer(), fsa);
+      }
     }
   }
 }

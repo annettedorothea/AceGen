@@ -17,6 +17,10 @@
 
 package de.acegen.extensions
 
+import de.acegen.aceGen.Attribute
+import de.acegen.aceGen.Model
+import java.util.List
+
 class CommonExtension {
 
 	def String copyright() '''
@@ -47,6 +51,31 @@ class CommonExtension {
 	
 	
 	'''
+	
+	def void allAttributesRec(Model it, List<Attribute> attrs) {
+		for (attribute : attributes) {
+			if (!attrs.containsAttribute(attribute)) {
+				attrs.add(attribute)
+			}
+		}
+		for(superModel : superModels) {
+			superModel.allAttributesRec(attrs);
+		}
+	}
+	
+	def boolean containsAttribute(List<Attribute> it, Attribute attribute) {
+		if (size == 0) {
+			return false
+		} else {
+			for (attr : it) {
+				if (attr.name.equals(attribute.name)) {
+					return true
+				}
+			}
+		}
+		return false;
+	}
+	
 	
 }
 

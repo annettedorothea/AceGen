@@ -19,18 +19,18 @@ package de.acegen.scoping
 
 import de.acegen.aceGen.AceGenPackage
 import de.acegen.aceGen.Attribute
+import de.acegen.aceGen.HttpServerAce
+import de.acegen.aceGen.HttpServerAceWrite
+import de.acegen.aceGen.HttpServerOutcome
+import de.acegen.aceGen.HttpServerViewFunction
 import de.acegen.aceGen.Model
-import de.acegen.extensions.java.ModelExtension
+import de.acegen.extensions.CommonExtension
 import java.util.ArrayList
 import javax.inject.Inject
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.scoping.impl.FilteringScope
-import de.acegen.aceGen.HttpServerAceWrite
-import de.acegen.aceGen.HttpServerAce
-import de.acegen.aceGen.HttpServerOutcome
-import de.acegen.aceGen.HttpServerViewFunction
 
 /**
  * This class contains custom scoping description.
@@ -41,7 +41,7 @@ import de.acegen.aceGen.HttpServerViewFunction
 class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 
 	@Inject
-	extension ModelExtension
+	extension CommonExtension
 
 	override getScope(EObject context, EReference reference) {
 		if (context instanceof HttpServerAce && (
@@ -73,6 +73,7 @@ class AceGenScopeProvider extends AbstractAceGenScopeProvider {
 		}
 		return super.getScope(context, reference);
 	}
+	
 
 }
 	

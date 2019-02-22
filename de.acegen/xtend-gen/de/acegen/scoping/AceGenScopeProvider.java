@@ -24,7 +24,7 @@ import de.acegen.aceGen.HttpServerAceWrite;
 import de.acegen.aceGen.HttpServerOutcome;
 import de.acegen.aceGen.HttpServerViewFunction;
 import de.acegen.aceGen.Model;
-import de.acegen.extensions.java.ModelExtension;
+import de.acegen.extensions.CommonExtension;
 import de.acegen.scoping.AbstractAceGenScopeProvider;
 import java.util.ArrayList;
 import javax.inject.Inject;
@@ -46,7 +46,7 @@ import org.eclipse.xtext.xbase.lib.Extension;
 public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
   @Inject
   @Extension
-  private ModelExtension _modelExtension;
+  private CommonExtension _commonExtension;
   
   @Override
   public IScope getScope(final EObject context, final EReference reference) {
@@ -56,7 +56,7 @@ public class AceGenScopeProvider extends AbstractAceGenScopeProvider {
         Objects.equal(reference, AceGenPackage.Literals.HTTP_SERVER_ACE__PAYLOAD)) || Objects.equal(reference, AceGenPackage.Literals.HTTP_SERVER_ACE__RESPONSE)))) {
       final HttpServerAce javaAce = ((HttpServerAce) context);
       final ArrayList<Attribute> attrs = new ArrayList<Attribute>();
-      this._modelExtension.allAttributesRec(javaAce.getModel(), attrs);
+      this._commonExtension.allAttributesRec(javaAce.getModel(), attrs);
       return Scopes.scopeFor(attrs);
     }
     if ((context instanceof HttpServerOutcome)) {

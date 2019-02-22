@@ -17,11 +17,11 @@
 
 package de.acegen.extensions.java
 
-import java.util.ArrayList
-import javax.inject.Inject
 import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.HttpServerAce
 import de.acegen.aceGen.HttpServerOutcome
+import java.util.ArrayList
+import javax.inject.Inject
 
 class AceExtension {
 	

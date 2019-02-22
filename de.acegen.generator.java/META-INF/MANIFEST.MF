@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: de.acegen.generator.java
+Bundle-SymbolicName: de.acegen.generator.java;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: Annette Pohl
+Automatic-Module-Name: de.acegen.generator.java
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: de.acegen;bundle-version="0.5.0",
+ com.google.guava,
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib.macro,
+ javax.inject;bundle-version="1.0.0",
+ org.eclipse.xtext;bundle-version="2.14.0"
+Bundle-ActivationPolicy: lazy
+Import-Package: org.osgi.framework
+Bundle-Activator: de.acegen.generator.Activator
+

@@ -18,11 +18,11 @@
 package de.acegen.extensions.java
 
 import de.acegen.aceGen.Attribute
+import de.acegen.aceGen.HttpServerAce
 import de.acegen.aceGen.Model
 import java.util.ArrayList
 import java.util.List
 import javax.inject.Inject
-import de.acegen.aceGen.HttpServerAce
 
 class AttributeExtension {
 

@@ -460,7 +460,7 @@ public class ActionTemplate {
           for(final Attribute param_4 : _allAttributes) {
             _builder.append("\t\t");
             {
-              boolean _containsAttribute = this._modelExtension.containsAttribute(authUser.getAttributes(), param_4);
+              boolean _containsAttribute = this._commonExtension.containsAttribute(authUser.getAttributes(), param_4);
               if (_containsAttribute) {
                 _builder.append("this.actionData.");
                 StringConcatenation _builder_2 = new StringConcatenation();
@@ -1356,7 +1356,7 @@ public class ActionTemplate {
           for(final Attribute param_4 : _allAttributes) {
             _builder.append("\t\t");
             {
-              boolean _containsAttribute = this._modelExtension.containsAttribute(authUser.getAttributes(), param_4);
+              boolean _containsAttribute = this._commonExtension.containsAttribute(authUser.getAttributes(), param_4);
               if (_containsAttribute) {
                 _builder.append("this.actionData.");
                 StringConcatenation _builder_2 = new StringConcatenation();

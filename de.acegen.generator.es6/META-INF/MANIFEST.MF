@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: de.acegen.generator.es6
+Bundle-SymbolicName: de.acegen.generator.es6
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: Annette Pohl
+Automatic-Module-Name: de.acegen.generator.es6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

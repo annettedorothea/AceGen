@@ -1,6 +1,6 @@
 /* 
  * Copyright (c) 2019, Annette Pohl, Koblenz, Germany
- *
+ * 
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
  * copyright notice and this permission notice appear in all copies.
@@ -13,25 +13,30 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
- 
 
-package de.acegen.generator
 
+package de.acegen.generator.java
+
+import de.acegen.aceGen.HttpServer
+import de.acegen.aceGen.HttpServerAceWrite
+import de.acegen.aceGen.Project
 import de.acegen.extensions.java.AceExtension
 import de.acegen.extensions.java.JavaExtension
 import de.acegen.extensions.java.ModelExtension
 import de.acegen.extensions.java.ViewExtension
+import de.acegen.generator.ACEOutputConfigurationProvider
 import de.acegen.templates.java.AceTemplate
 import de.acegen.templates.java.ActionTemplate
 import de.acegen.templates.java.CommandTemplate
 import de.acegen.templates.java.EventTemplate
 import de.acegen.templates.java.ModelTemplate
 import javax.inject.Inject
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
-import de.acegen.aceGen.HttpServer
-import de.acegen.aceGen.HttpServerAceWrite
+import org.eclipse.xtext.generator.IGeneratorContext
 
-class JavaGenerator {
+class JavaGenerator extends AbstractGenerator {
 	@Inject
 	ActionTemplate actionTemplate;
 
@@ -43,10 +48,10 @@ class JavaGenerator {
 
 	@Inject
 	AceTemplate aceTemplate;
-	
+
 	@Inject
 	ModelTemplate modelTemplate;
-	
+
 	@Inject
 	extension ViewExtension
 
@@ -107,11 +112,10 @@ class JavaGenerator {
 						ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 						eventTemplate.generateAbstractEventFile(ace, outcome, java));
 				}
-			} 
+			}
 			if (ace.response.size > 0) {
 				fsa.generateFile(java.packageFolder + '/data/' + ace.responseDataName + '.java',
-					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-					modelTemplate.generateResponseData(ace, java));
+					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, modelTemplate.generateResponseData(ace, java));
 				fsa.generateFile(java.packageFolder + '/data/' + ace.responseDataInterfaceName + '.java',
 					ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
 					modelTemplate.generateReponseDataInterface(ace, java));
@@ -124,14 +128,14 @@ class JavaGenerator {
 				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, eventTemplate.generateViewInterface(view, java));
 		}
 
-		fsa.generateFile('com/anfelisa/ace/AbstractBaseTest.java',
-			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateBaseTest());
+		fsa.generateFile('com/anfelisa/ace/AbstractBaseTest.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+			aceTemplate.generateBaseTest());
 
-		fsa.generateFile(java.packageFolder + '/TestUtils.java',
-			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateTestUtils(java));
+		fsa.generateFile(java.packageFolder + '/TestUtils.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+			aceTemplate.generateTestUtils(java));
 
-		fsa.generateFile(java.packageFolder + '/ActionCalls.java',
-			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateActionCalls(java));
+		fsa.generateFile(java.packageFolder + '/ActionCalls.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+			aceTemplate.generateActionCalls(java));
 
 		fsa.generateFile(java.packageFolder + '/events/EventFactory.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, eventTemplate.generateEventFactory(java));
@@ -139,16 +143,16 @@ class JavaGenerator {
 		fsa.generateFile(java.packageFolder + '/actions/AceDataFactory.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, actionTemplate.generateAceDataFactory(java));
 
-		fsa.generateFile('com/anfelisa/ace/EventFactory.java',
-			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, eventTemplate.generateEventFactory());
+		fsa.generateFile('com/anfelisa/ace/EventFactory.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
+			eventTemplate.generateEventFactory());
 
 		fsa.generateFile(java.packageFolder + '/AppRegistration.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, actionTemplate.generateAppRegistration(java));
 
 		fsa.generateFile("com/anfelisa/ace" + '/App.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
 			aceTemplate.generateApp());
-		fsa.generateFile("com/anfelisa/ace" + '/AppRegistration.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE,
-			aceTemplate.generateAppRegistration());
+		fsa.generateFile("com/anfelisa/ace" + '/AppRegistration.java',
+			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, aceTemplate.generateAppRegistration());
 		fsa.generateFile("com/anfelisa/ace" + '/AppConfiguration.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateAppConfiguration());
 		fsa.generateFile("com/anfelisa/ace" + '/CustomAppConfiguration.java',
@@ -165,8 +169,8 @@ class JavaGenerator {
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateSetSystemTimeResource());
 		fsa.generateFile("com/anfelisa/ace" + '/StopE2ESessionResource.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateStopE2ESessionResource());
-		fsa.generateFile("com/anfelisa/ace" + '/AceOperation.java',
-			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateAceOperation());
+		fsa.generateFile("com/anfelisa/ace" + '/AceOperation.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+			aceTemplate.generateAceOperation());
 		fsa.generateFile("com/anfelisa/ace" + '/PrepareE2EResource.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generatePrepareE2EResource());
 		fsa.generateFile("com/anfelisa/ace" + '/GetServerTimelineResource.java',
@@ -221,25 +225,30 @@ class JavaGenerator {
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT_ONCE, aceTemplate.generateViewProvider());
 		fsa.generateFile("com/anfelisa/ace" + '/AbstractViewProvider.java',
 			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateAbstractViewProvider());
-			
-		fsa.generateFile("com/anfelisa/ace" + '/EventConsumer.java',
-			ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateEventconsumer());
+
+		fsa.generateFile("com/anfelisa/ace" + '/EventConsumer.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
+			aceTemplate.generateEventconsumer());
 
 		fsa.generateFile('ace_creation.xml', ACEOutputConfigurationProvider.DEFAULT_RESOURCE_OUTPUT,
 			aceTemplate.generateAceMigration());
 
 		if (authUser !== null) {
-			fsa.generateFile('com/anfelisa/auth/' + authUser.name.toFirstUpper + '.java', ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT,
-				aceTemplate.generateAuthUser(authUser));
+			fsa.generateFile('com/anfelisa/auth/' + authUser.name.toFirstUpper + '.java',
+				ACEOutputConfigurationProvider.DEFAULT_JAVA_OUTPUT, aceTemplate.generateAuthUser(authUser));
 		}
 
 	}
 
+	override doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
+		if (resource !== null && resource.contents !== null && resource.contents.size > 0) {
+			val project = resource.contents.get(0) as Project
+
+			if (project.httpServer !== null) {
+				doGenerate(project.httpServer, fsa);
+			}
+
+		}
+	}
+
 }
-	
-	
-	
 /******* S.D.G. *******/
-	
-	
-	

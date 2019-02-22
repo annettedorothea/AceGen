@@ -18,16 +18,20 @@
 package de.acegen.extensions.java
 
 import de.acegen.aceGen.Attribute
+import de.acegen.aceGen.HttpServer
 import de.acegen.aceGen.Model
+import de.acegen.extensions.CommonExtension
 import java.util.ArrayList
 import java.util.List
 import javax.inject.Inject
-import de.acegen.aceGen.HttpServer
 
 class ModelExtension {
 
 	@Inject
 	extension AttributeExtension
+		
+	@Inject
+	extension CommonExtension
 		
 	def String modelName(Model it) '''I«name.toFirstUpper»Model'''
 
@@ -160,19 +164,6 @@ class ModelExtension {
 	'''
 	
 	def String dataParamType(Model it) '''«IF it !== null»«dataInterfaceName»«ELSE»IDataContainer«ENDIF»'''
-	
-	def boolean containsAttribute(List<Attribute> it, Attribute attribute) {
-		if (size == 0) {
-			return false
-		} else {
-			for (attr : it) {
-				if (attr.name.equals(attribute.name)) {
-					return true
-				}
-			}
-		}
-		return false;
-	}
 	
 	def boolean containsModel(List<Model> it, Model model) {
 		if (size == 0) {
